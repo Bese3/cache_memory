@@ -5,45 +5,28 @@
 
 void main_memory()
 {
- int instruct[20] = {00001010 ,00001001 ,00100001 ,00000001 ,00000010 ,00000011 ,00000100 ,00001101 ,00001110 ,00001111 ,00010000 ,00000101 ,00000111 ,00000110 ,00001000 , 00001011 , 00001100 ,00010100 , 00010101 , 00010010 , 00010011};
- int size = 64;
- int main[size];
- int i;
-  for(i = 0; i < 21; i++)
-  {
-   main[i] = instruct[i]; // mapping all instruction in memory
-   int *pc = main[i + 1]; //program counter in CPU has always the next instruction placed
-   printf("%d\n" , main[i]);
-  } 
-  int length = 0;
-  int binary[size - 20];
-  for(int j = 21; j < 64; i++)
-  {
-    srand(time(NULL));
-   main[j] = rand();
-   do
-   {
-    if (main[j] % 2 == 0)
-     binary[length] = 0;
-     else
-     binary[length] = 1;
-     main[j] = main[j] / 2;
-     length++;
+// sample memory unit which has 11 IAS instructions and generated words in hexadecimal form
+ int memory[20] = {00001010 ,00001001 ,00100001 ,00000001 ,00000010 ,00000011 ,00000100 ,00001101 ,00001110 ,00001111 ,00010000 ,00000101 ,00000111 ,00000110 ,00001000 , 00001011 , 00001100 ,00010100 , 00010101 , 00010010 , 00010011};
 
 
-   } while ({main[j] != 0});
-   printf("%d\n" , binary[j]);
-   
+ printf("ADDRESS       WORDS/INSTRUCTIONS\n");
+ for(int i = 0; i < 21; i++)
+ {
+  int *pc = &memory[i];
 
+  printf("0x%p        0x%x\n", pc , memory[i]);
 
-  }
+ }
+ int memory2[12];
+ for (int j = 21; j < 32; j++)
+ {
+     srand(time(NULL));
+     memory2[j] = rand() / j;
+     int *pc2 = &memory2[j];
+  printf("0x%p        0x%x\n" ,pc2 , memory2[j]);
 
-  
-
-
-
+ }
 }
-
 
 
 void direct()
