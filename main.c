@@ -1,43 +1,49 @@
 #include <stdio.h>
 #include <stdlib.h>
 //#include(shell.h)
+#include<time.h>
 
 void main_memory()
 {
-  int  size = 64;
-  // 2**6 size of memory which returns only integer
-  int main[size];
-  for (int i = 0; i <= size; i++)
+ int instruct[20] = {00001010 ,00001001 ,00100001 ,00000001 ,00000010 ,00000011 ,00000100 ,00001101 ,00001110 ,00001111 ,00010000 ,00000101 ,00000111 ,00000110 ,00001000 , 00001011 , 00001100 ,00010100 , 00010101 , 00010010 , 00010011};
+ int size = 64;
+ int main[size];
+ int i;
+  for(i = 0; i < 21; i++)
   {
-      int *pc = &main[i+1];
-      main[i] = rand();
-      char binary[256];
-      int length = 0;
-      do
-      {
-          if (main[i] % 2 == 0)
-            binary[length] = '0';
-          else
-            binary[length] = '1';
-          main[i] /=2;
-          length++;
-      }while(main[1] != 0 );
-      binary[length] = '\0';
-      int middle = length/2;
-      char temp;
-      for(int j = 0; j< middle; j++)
-      {
-          temp = binary[j];
-          binary[j] = binary[length - j - 1];
-          binary[length - j - 1] =temp;
-      }
-      printf("%s\n" , binary[i]);
+   main[i] = instruct[i]; // mapping all instruction in memory
+   int *pc = main[i + 1]; //program counter in CPU has always the next instruction placed
+  } 
+  int length = 0;
+  int binary[size - 20];
+  for(i = 21; i < 64; i++)
+  {
+    srand(time(NULL));
+   main[i] = rand();
+   do
+   {
+    if (main[i] % 2 == 0)
+     binary[length] = 0;
+     else
+     binary[length] = 1;
+     main[i] / = 2;
+     length++;
 
+
+   } while ({main[i] != 0});
+   printf("%d" , binary[i]);
+   
 
 
   }
 
+  
+
+
+
 }
+
+
 
 void direct()
 {
