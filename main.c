@@ -13,25 +13,26 @@ void main_memory()
   {
    main[i] = instruct[i]; // mapping all instruction in memory
    int *pc = main[i + 1]; //program counter in CPU has always the next instruction placed
+   printf("%d\n" , main[i]);
   } 
   int length = 0;
   int binary[size - 20];
-  for(i = 21; i < 64; i++)
+  for(int j = 21; j < 64; i++)
   {
     srand(time(NULL));
-   main[i] = rand();
+   main[j] = rand();
    do
    {
-    if (main[i] % 2 == 0)
+    if (main[j] % 2 == 0)
      binary[length] = 0;
      else
      binary[length] = 1;
-     main[i] / = 2;
+     main[j] = main[j] / 2;
      length++;
 
 
-   } while ({main[i] != 0});
-   printf("%d" , binary[i]);
+   } while ({main[j] != 0});
+   printf("%d\n" , binary[j]);
    
 
 
