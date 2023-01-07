@@ -6,7 +6,23 @@
 void main_memory()
 {
 // sample memory unit which has 11 IAS instructions and generated words in hexadecimal form
+int memory2[12];
+int bits[2];
+char select = 0;
  int memory[20] = {00001010 ,00001001 ,00100001 ,00000001 ,00000010 ,00000011 ,00000100 ,00001101 ,00001110 ,00001111 ,00010000 ,00000101 ,00000111 ,00000110 ,00001000 , 00001011 , 00001100 ,00010100 , 00010101 , 00010010 , 00010011};
+printf("add your data into memory?(1 or 2)\n");
+scanf("%c" , select);
+switch(select)
+{
+case 1:
+    scanf("%d" , bits[2]);
+    for(int k = 0; k < 2;k++)
+    {
+        memory[10+k] = bits[k];
+        printf("0x%x" , memory[10+k]);
+    }
+
+}
 
 
  printf("ADDRESS       WORDS/INSTRUCTIONS\n");
@@ -17,8 +33,8 @@ void main_memory()
   printf("0x%p        0x%x\n", pc , memory[i]);
 
  }
- int memory2[12];
- for (int j = 21; j < 32; j++)
+
+ for (int j = 0; j < 10; j++)
  {
      srand(time(NULL));
      memory2[j] = rand() / j;
@@ -26,6 +42,7 @@ void main_memory()
   printf("0x%p        0x%x\n" ,pc2 , memory2[j]);
 
  }
+
 }
 
 
