@@ -29,10 +29,11 @@ int main()
             printf("3. Set-Associative Mapping\n");
              printf("4. display main memory\n");
              scanf("%d" , &choice);
+             direct1* display = main_memory();
       switch(choice)
       {
       case 1:
-          //direct_mapping();
+          direct_mapping();
           break;
       case 2:
         //associative();
@@ -41,12 +42,9 @@ int main()
         //set();
         break;
       case 4:
-        main_memory();
+        display;
         break;
       case 5:
-
-
-        return 0;
         default:
             printf("sorry invalid choice\n");
 
@@ -62,11 +60,11 @@ int main()
 
 
 
-direct1 main_memory()
+int main_memory()
 {
 // sample memory unit which has 21 IAS instructions and generated words in hexadecimal form
 
-direct1 copy;
+direct1 copy ;
 
   int array[]= {00001010 ,00001001 ,00100001 ,00000001};
 
@@ -87,17 +85,22 @@ direct1 copy;
 
 
    }
-  return copy;
+
+  return &copy;
 }
 
 
-/*void direct_mapping(int *cache , int length)
+void direct_mapping(int *cache , int length)
+{
+direct1* map = main_memory();
+for (int i = 0; i < 32; i++)
 {
 
-    printf("%d" , copy.memory[3]);
+
+    printf("%d" , map->memory[i]);
+}
 
 
-
-}*/
+}
 
 
