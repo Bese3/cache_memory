@@ -98,20 +98,20 @@ direct1 copy ;
   return &copy;
 }
 
+void direct_mapping()
 
-int direct_mapping()
 {
+    point* cache1;
 direct1* map = main_memory();
 
-point cache1;
+
 for(int i = 0; i < 8; i++)
 {
-    cache1.cache[i] = map->memory[i];
-    cache1.tag = &cache1.cache[i];
-    printf("0x%p     0x%x\n" , cache1.tag , cache1.cache[i]);
+    cache1->cache[i] = map->memory[i];
+    cache1->tag = &cache1->cache[i];
+    printf("0x%p     0x%x\n" , cache1->tag , cache1->cache[i]);
 }
 
-return &cache1;
 
 }
 
