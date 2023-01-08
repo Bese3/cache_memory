@@ -82,7 +82,7 @@ direct1 copy ;
   {
       copy.memory[i] = array[i];
       copy.pc = &copy.memory[i];
-   printf("0x%p         0x%x\n" , copy.pc , copy.memory[i]);
+   printf("%p         0x%x\n" , copy.pc , copy.memory[i]);
   }
 
  for (int j = 4; j < 32; j++)
@@ -90,7 +90,7 @@ direct1 copy ;
      srand(time(NULL));
      copy.memory[j] = rand() / j;
      copy.pc = &copy.memory[j];
-   printf("0x%p        0x%x\n" ,copy.pc , copy.memory[j]);
+   printf("%p        0x%x\n" ,copy.pc , copy.memory[j]);
 
 
    }
@@ -109,7 +109,7 @@ for(int i = 0; i < 8; i++)
 {
     cache1->cache[i] = map->memory[i];
     cache1->tag = &cache1->cache[i];
-    printf("0x%p     0x%x\n" , cache1->tag , cache1->cache[i]);
+    printf("%p     0x%x\n" , cache1->tag , cache1->cache[i]);
 }
 
 
