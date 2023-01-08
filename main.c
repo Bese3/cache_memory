@@ -12,13 +12,13 @@ typedef struct
     int memory[32];
 
     int *pc;
-    int pc2;
+
 }direct1 , associative1 , set1;
 
 
 int main()
 {
-  int *pc , *pc2;
+
     int choice;
      printf("############################\n");
       printf("#  CACHE MEMORY MAPPING    #\n");
@@ -77,8 +77,8 @@ direct1 main;
  {
      srand(time(NULL));
      main.memory[j] = rand() / j;
-     main.pc2 = &main.memory[j];
-  printf("0x%p        0x%x\n" ,main.pc2 , main.memory[j]);
+     main.pc = &main.memory[j];
+  printf("0x%p        0x%x\n" ,main.pc , main.memory[j]);
 
  }
   return;
