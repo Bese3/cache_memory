@@ -3,65 +3,22 @@
 //#include(shell.h)
 #include<time.h>
 
-void main_memory()
+void main_memory();
+void direct(int *cache , int length);
+void associative();
+void set();
+typedef struct
 {
-// sample memory unit which has 11 IAS instructions and generated words in hexadecimal form
-int memory2[12];
-int bits[2];
-char select = 0;
- int memory[20] = {00001010 ,00001001 ,00100001 ,00000001 ,00000010 ,00000011 ,00000100 ,00001101 ,00001110 ,00001111 ,00010000 ,00000101 ,00000111 ,00000110 ,00001000 , 00001011 , 00001100 ,00010100 , 00010101 , 00010010 , 00010011};
-printf("add your data into memory?(1 or 2)\n");
-scanf("%c" , select);
-switch(select)
-{
-case 1:
-    scanf("%d" , bits[2]);
-    for(int k = 0; k < 2;k++)
-    {
-        memory[10+k] = bits[k];
-        printf("0x%x" , memory[10+k]);
-    }
+    int memory[32];
 
-}
+    int *pc;
+    int pc2;
+}direct1 , associative1 , set1;
 
-
- printf("ADDRESS       WORDS/INSTRUCTIONS\n");
- for(int i = 0; i < 21; i++)
- {
-  int *pc = &memory[i];
-
-  printf("0x%p        0x%x\n", pc , memory[i]);
-
- }
-
- for (int j = 0; j < 10; j++)
- {
-     srand(time(NULL));
-     memory2[j] = rand() / j;
-     int *pc2 = &memory2[j];
-  printf("0x%p        0x%x\n" ,pc2 , memory2[j]);
-
- }
-
-}
-
-
-void direct()
-{
-
-}
-void associative()
-{
-
-}
-void set()
-{
-
-}
 
 int main()
 {
-
+  int *pc , *pc2;
     int choice;
      printf("############################\n");
       printf("#  CACHE MEMORY MAPPING    #\n");
@@ -76,7 +33,7 @@ int main()
       switch(choice)
       {
       case 1:
-          direct();
+          //direct();
           break;
       case 2:
         associative();
@@ -99,3 +56,69 @@ int main()
 
     return 0;
 }
+
+
+
+
+
+void main_memory()
+{
+// sample memory unit which has 21 IAS instructions and generated words in hexadecimal form
+
+direct1 main;
+
+
+
+
+ printf("ADDRESS       WORDS/INSTRUCTIONS\n");
+
+
+ for (int j = 0; j < 32; j++)
+ {
+     srand(time(NULL));
+     main.memory[j] = rand() / j;
+     main.pc2 = &main.memory[j];
+  printf("0x%p        0x%x\n" ,main.pc2 , main.memory[j]);
+
+ }
+  return;
+}
+
+
+/*void *direct(int *cache , int length)
+{
+    int tag;
+    int *c = malloc(length * sizeof(int));
+    printf("Choose(1 or 2):\n");
+    printf("Instruction or Randomly Generated Words\n");
+    int select;
+    scanf("%d" , &select);
+    if (select == 1)
+    {
+        for (int i = 0; i < length; i++)
+        {
+            cache[i]= memory[i];
+            tag = pc;
+
+        }
+    }
+    else
+    {
+        for (int j = 21; j < 32; j++)
+        {
+            cache[j] = memory2[j];
+            tag = pc2;
+        }
+    }
+
+
+}*/
+void associative()
+{
+
+}
+void set()
+{
+
+}
+
