@@ -14,6 +14,14 @@ typedef struct
 
 }direct1 ;
 
+
+
+typedef  struct
+{
+    int cache[8];
+    int *tag;
+}point;
+
 int main()
 {
 
@@ -29,11 +37,12 @@ int main()
             printf("3. Set-Associative Mapping\n");
              printf("4. display main memory\n");
              scanf("%d" , &choice);
+             point* data = direct_mapping();
              direct1* display = main_memory();
       switch(choice)
       {
       case 1:
-          direct_mapping();
+          data;
           break;
       case 2:
         //associative();
@@ -62,7 +71,7 @@ int main()
 
 int main_memory()
 {
-// sample memory unit which has 21 IAS instructions and generated words in hexadecimal form
+// sample memory unit which has some IAS instructions and generated words in hexadecimal form
 
 direct1 copy ;
 
@@ -90,16 +99,19 @@ direct1 copy ;
 }
 
 
-void direct_mapping(int *cache , int length)
+int direct_mapping()
 {
 direct1* map = main_memory();
-for (int i = 0; i < 32; i++)
+
+point cache1;
+for(int i = 0; i < 8; i++)
 {
-
-
-    printf("%d" , map->memory[i]);
+    cache1.cache[i] = map->memory[i];
+    cache1.tag = &cache1.cache[i];
+    printf("0x%p     0x%x\n" , cache1.tag , cache1.cache[i]);
 }
 
+return &cache1;
 
 }
 
