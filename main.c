@@ -9,8 +9,8 @@ void associative();
 void set();
 typedef struct
 {
-    int memory[32];
 
+        int memory[32];
     int *pc;
 
 }direct1 , associative1 , set1;
@@ -67,20 +67,25 @@ void main_memory()
 
 direct1 main;
 
+  int array[]= {00001010 ,00001001 ,00100001 ,00000001};
 
+  printf("ADDRESS       WORDS/INSTRUCTIONS\n");
+  for (int i = 0; i < 4; i++)
+  {
+      main.memory[i] = array[i];
+      main.pc = &main.memory[i];
+   printf("0x%p         0x%x\n" , main.pc , main.memory[i]);
+  }
 
-
- printf("ADDRESS       WORDS/INSTRUCTIONS\n");
-
-
- for (int j = 0; j < 32; j++)
+ for (int j = 4; j < 32; j++)
  {
      srand(time(NULL));
      main.memory[j] = rand() / j;
      main.pc = &main.memory[j];
-  printf("0x%p        0x%x\n" ,main.pc , main.memory[j]);
+   printf("0x%p        0x%x\n" ,main.pc , main.memory[j]);
 
- }
+
+   }
   return;
 }
 
