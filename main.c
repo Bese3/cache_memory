@@ -6,21 +6,23 @@
 
 
 
-typedef struct
+ struct memory
 {
 
         int memory[32];
     int *pc;
 
-}direct1 ;
+} ;
 
 
 
-typedef  struct
+ struct cache
 {
     int cache[8];
-    int *tag;
-}point;
+    int tag[8];
+};
+struct memory main_memory();
+struct cache direct_mapping();
 
 int main()
 {
@@ -37,12 +39,12 @@ int main()
             printf("3. Set-Associative Mapping\n");
              printf("4. display main memory\n");
              scanf("%d" , &choice);
-             point* data = direct_mapping();
-             direct1* display = main_memory();
+
+
       switch(choice)
       {
       case 1:
-          data;
+          direct_mapping();
           break;
       case 2:
         //associative();
@@ -51,7 +53,7 @@ int main()
         //set();
         break;
       case 4:
-        display;
+        main_memory();
         break;
       case 5:
         default:
@@ -69,15 +71,14 @@ int main()
 
 
 
-int main_memory()
+struct memory main_memory()
 {
 // sample memory unit which has some IAS instructions and generated words in hexadecimal form
 
-direct1 copy ;
-
+struct memory copy;
   int array[]= {00001010 ,00001001 ,00100001 ,00000001};
 
-  printf("ADDRESS       WORDS/INSTRUCTIONS\n");
+  printf("ADDRESS             WORDS/INSTRUCTIONS\n");
   for (int i = 0; i < 4; i++)
   {
       copy.memory[i] = array[i];
@@ -90,29 +91,45 @@ direct1 copy ;
      srand(time(NULL));
      copy.memory[j] = rand() / j;
      copy.pc = &copy.memory[j];
-   printf("%p        0x%x\n" ,copy.pc , copy.memory[j]);
+   printf("%p         0x%x\n" ,copy.pc , copy.memory[j]);
 
 
    }
 
-  return &copy;
+  return copy;
 }
 
-void direct_mapping()
+struct cache direct_mapping()
 
 {
-    point* cache1;
-direct1* map = main_memory();
-
-
-for(int i = 0; i < 8; i++)
+    struct cache cache1;
+struct memory map = main_memory();
+srand(time(NULL));
+int j = rand() % 26;
+//code for random output of j
+printf("current cache value\n");
+    printf("TAG             WORDS/INSTRUCTIONS\n");
+for(int i = 0 + j; i < 8 + j; i++)
 {
-    cache1->cache[i] = map->memory[i];
-    cache1->tag = &cache1->cache[i];
-    printf("%p     0x%x\n" , cache1->tag , cache1->cache[i]);
+    cache1.cache[i] = map.memory[i];
+    cache1.tag[i] = i;
+    printf("%x                   0x%x\n" , cache1.tag[i] , cache1.cache[i]);
 }
+//hit and miss process
+int input;
+printf("input the word to check in the cache\n");
+scanf("%d" , &input);
+for(int k = 0 + j; k < 8 + j;k++)
+{
+    cache1.cache[k] = map.memory[k];
+    cache1.tag[k] = k;
+ if (cache1.cache[k] == input )
+ {
+     printf("hit at %x with the word 0x%x\n" , cache1.tag[k] ,cache1.cache[k] );
+ }
+ }
 
-
+return cache1;
 }
 
 
