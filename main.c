@@ -108,7 +108,7 @@ srand(time(NULL));
 int j = rand() % 26;
 //code for random output of j
 printf("current cache value\n");
-    printf("TAG             WORDS/INSTRUCTIONS\n");
+    printf("TAG(hex)            WORDS/INSTRUCTIONS\n");
 for(int i = 0 + j; i < 8 + j; i++)
 {
     cache1.cache[i] = map.memory[i];
@@ -118,7 +118,7 @@ for(int i = 0 + j; i < 8 + j; i++)
 //hit and miss process
 int input;
 printf("input the word to check in the cache\n");
-scanf("%d" , &input);
+scanf("%x" , &input);
 for(int k = 0 + j; k < 8 + j;k++)
 {
     cache1.cache[k] = map.memory[k];
