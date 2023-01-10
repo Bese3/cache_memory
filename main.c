@@ -10,7 +10,7 @@
 {
 
         int memory[32];
-    int *pc;
+    int *address[32];
 
 } ;
 
@@ -71,65 +71,68 @@ int main()
 
 
 
-struct memory main_memory()
-{
+    struct memory main_memory()
+      {
 // sample memory unit which has some IAS instructions and generated words in hexadecimal form
 
-struct memory copy;
-  int array[]= {00001010 ,00001001 ,00100001 ,00000001};
+  struct memory copy;
+    int array[]= {00001010 ,00001001 ,00100001 ,00000001};  //first four IAS instructions
 
-  printf("ADDRESS             WORDS/INSTRUCTIONS\n");
+    printf("ADDRESS             WORDS/INSTRUCTIONS\n");
   for (int i = 0; i < 4; i++)
   {
       copy.memory[i] = array[i];
-      copy.pc = &copy.memory[i];
-   printf("%p         0x%x\n" , copy.pc , copy.memory[i]);
+        copy.address[i] = &copy.memory[i];
+           printf("%p         0x%x\n" , copy.address[i] , copy.memory[i]);
   }
 
- for (int j = 4; j < 32; j++)
- {
+    for (int j = 4; j < 32; j++)
+   {
      srand(time(NULL));
-     copy.memory[j] = rand() / j;
-     copy.pc = &copy.memory[j];
-   printf("%p         0x%x\n" ,copy.pc , copy.memory[j]);
+       copy.memory[j] = rand() / j;
+        copy.address[j] = &copy.memory[j];
+   printf("%p         0x%x\n" ,copy.address[j] , copy.memory[j]);
 
 
-   }
+    }
 
-  return copy;
-}
+         return copy;
+         }
 
 struct cache direct_mapping()
 
 {
     struct cache cache1;
-struct memory map = main_memory();
-srand(time(NULL));
-int j = rand() % 26;
-//code for random output of j
-printf("current cache value\n");
-    printf("TAG(hex)            WORDS/INSTRUCTIONS\n");
-for(int i = 0 + j; i < 8 + j; i++)
-{
-    cache1.cache[i] = map.memory[i];
-    cache1.tag[i] = i;
-    printf("%x                   0x%x\n" , cache1.tag[i] , cache1.cache[i]);
-}
-//hit and miss process
-int input;
-printf("input the word to check in the cache\n");
-scanf("%x" , &input);
-for(int k = 0 + j; k < 8 + j;k++)
-{
-    cache1.cache[k] = map.memory[k];
-    cache1.tag[k] = k;
- if (cache1.cache[k] == input )
- {
-     printf("hit at %x with the word 0x%x\n" , cache1.tag[k] ,cache1.cache[k] );
- }
- }
+     struct memory map = main_memory();
+        srand(time(NULL));
+          int j = rand() % 26;      //code for random output of j
 
-return cache1;
+
+    printf("current cache value\n");
+    printf("TAG(hex)            WORDS/INSTRUCTIONS\n");
+              for(int i = 0 + j; i < 8 + j; i++)
+          {
+              cache1.cache[i] = map.memory[i];
+               cache1.tag[i] = i;
+                 printf("%x                   0x%x\n" , cache1.tag[i] , cache1.cache[i]);
+           }
+        //hit and miss process
+     int input;
+      printf("input the word to check in the cache\n");
+        scanf("%x" , &input);
+               for(int k = 0 + j; k < 8 + j;k++)
+        {
+          cache1.cache[k] = map.memory[k];
+           cache1.tag[k] = k;
+             if (cache1.cache[k] == input )
+             {
+               printf("hit at %x with the word 0x%x\n" , cache1.tag[k] ,cache1.cache[k] );
+               printf("Tag number %x with the value %x is delivered to CPU register\n" , cache1.tag[k] , cache1.cache[k]);
+             }
+
+        }
+
+         return cache1;
 }
 
 
