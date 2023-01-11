@@ -122,7 +122,7 @@ struct cache direct_mapping()
         scanf("%d" , &input);
 
         int hit;
-        while(1){
+
                for(int k = 0 + j; k < 8 + j;k++)
         {
 
@@ -163,7 +163,7 @@ struct cache direct_mapping()
 
                 }
              }
-     //adding a word or instruction to the cache from memory
+    while(1){ //adding a word or instruction to the cache from memory
      int add;
      int data[4];
      printf("Add the Word/Instruction to Cache Memory(1 for Yes and 2 for No)\n");
@@ -190,7 +190,7 @@ struct cache direct_mapping()
 
 
          }
-        }
+    }
 
 
          return cache1;
@@ -198,8 +198,10 @@ struct cache direct_mapping()
 struct cache associative()
 {
     struct cache cache2;
+
     struct memory map = main_memory();
 
+      int array[]= {00001010 ,00001001 ,00100001 ,00000001};  //first four IAS instructions
 
 
      return cache2;
