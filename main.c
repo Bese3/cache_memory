@@ -140,12 +140,19 @@ struct cache direct_mapping()
          if (hit == 0)
              {
              printf("searching from memory..............\n");
-                printf("Loading from memory.........\n");
+
             for( int k = 0; k < 32; k++)
                 {
                 if (input == map.memory[k])
                 {
+                    printf("Loading from memory.........\n");
                     printf("found the word %x in %x\n" , input , map.address[k]);
+                }
+
+                else
+                {
+                    printf("word not found in memory\n");
+                    printf("try again.....\n");
                 }
 
                 }
