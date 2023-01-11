@@ -122,7 +122,8 @@ struct cache direct_mapping()
         scanf("%d" , &input);
 
         int hit;
-               for(int k = 0 + j; k < 4 + j;k++)
+        while(1){
+               for(int k = 0 + j; k < 8 + j;k++)
         {
 
              if (cache1.cache[k] == input )
@@ -189,6 +190,7 @@ struct cache direct_mapping()
 
 
          }
+        }
 
 
          return cache1;
