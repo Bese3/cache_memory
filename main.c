@@ -126,7 +126,7 @@ struct cache direct_mapping()
 
              if (cache1.cache[k] == input )
              {
-               printf("hit at %x with the word 0x%x\n" , cache1.tag[k] ,cache1.cache[k] );
+               printf("hit at %x with the word 0x%x\n" , cache1.tag[k] ,cache1.tag[k] );
                printf("Tag number %x with the value %x is delivered to CPU register\n" , cache1.tag[k] , cache1.cache[k]);
                hit = 1;
              }
@@ -137,8 +137,9 @@ struct cache direct_mapping()
              }
 
         }
-         if (hit = 0)
+         if (hit == 0)
              {
+             printf("searching from memory..............\n");
                 printf("Loading from memory.........\n");
             for( int k = 0; k < 32; k++)
                 {
