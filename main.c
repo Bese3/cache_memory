@@ -119,25 +119,35 @@ struct cache direct_mapping()
      int input;
       printf("Input the Word to check in the cache\n");
         scanf("%x" , &input);
-        int k;
-               for( k = 0 + j; k < 8 + j;k++)
+
+        int hit;
+               for(int k = 0 + j; k < 8 + j;k++)
         {
 
              if (cache1.cache[k] == input )
              {
                printf("hit at %x with the word 0x%x\n" , cache1.tag[k] ,cache1.cache[k] );
                printf("Tag number %x with the value %x is delivered to CPU register\n" , cache1.tag[k] , cache1.cache[k]);
+               hit = 1;
              }
              else
              {
                   printf("missed the value %x at 0x%x\n" , input , cache1.cache[k]);
+                  hit = 0;
              }
 
         }
-         if (cache1.cache[k] != input)
+         if (hit = 0)
              {
                 printf("Loading from memory.........\n");
+            for( int k = 0; k < 32; k++)
+                {
+                if (input == map.memory[k])
+                {
+                    printf("found the word %x in %x\n" , input , map.address[k]);
+                }
 
+                }
              }
 
 
