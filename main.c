@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include(shell.h)
 #include<time.h>
 
 
@@ -114,23 +113,33 @@ struct cache direct_mapping()
           {
               cache1.cache[i] = map.memory[i];
                cache1.tag[i] = i;
-                 printf("%x                   0x%x\n" , cache1.tag[i] , cache1.cache[i]);
+                 printf("%x                   0x%x\n" , cache1.tag[i] , cache1.cache[i] , cache1.cache[i]);
            }
         //hit and miss process
      int input;
-      printf("input the word to check in the cache\n");
+      printf("Input the Word to check in the cache\n");
         scanf("%x" , &input);
-               for(int k = 0 + j; k < 8 + j;k++)
+        int k;
+               for( k = 0 + j; k < 8 + j;k++)
         {
-          cache1.cache[k] = map.memory[k];
-           cache1.tag[k] = k;
+
              if (cache1.cache[k] == input )
              {
                printf("hit at %x with the word 0x%x\n" , cache1.tag[k] ,cache1.cache[k] );
                printf("Tag number %x with the value %x is delivered to CPU register\n" , cache1.tag[k] , cache1.cache[k]);
              }
+             else
+             {
+                  printf("missed the value %x at 0x%x\n" , input , cache1.cache[k]);
+             }
 
         }
+         if (cache1.cache[k] != input)
+             {
+                printf("Loading from memory.........\n");
+
+             }
+
 
          return cache1;
 }
