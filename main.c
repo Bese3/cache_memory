@@ -112,7 +112,7 @@ struct cache direct_mapping()
     printf("TAG(hex)            WORDS/INSTRUCTIONS\n");
               for(int i = 0; i < 4; i++)    //one block of cache is always occupied
           {
-              cache1.cache[i] = map.memory[i + j];
+              cache1.cache[i] = map.memory[i];
                cache1.tag[i] = i;
                  printf("%x                   0x%x\n" , cache1.tag[i] , cache1.cache[i]);
            }
@@ -166,6 +166,7 @@ struct cache direct_mapping()
      //adding a word or instruction to the cache from memory
      int add;
      int data[4];
+
      printf("press keys to Add the Word/Instruction to Cache Memory(1 for Yes and 2 for No)\n");
      scanf("%d" , &add);
      int random = rand() % 4;
@@ -185,14 +186,13 @@ struct cache direct_mapping()
 
             }
             printf("CACHE IS FULL\n");
-           for(int i = 0; i < 8; i++)
+           for(int i = 0; i < 4; i++)
             {
-
-            printf("Cache at %x is occupied by %x\n" , i  ,cache1.cache[i]);
-            cache1.cache[i - 4] = 0;
+          cache1.cache[i] = 0;
+             printf("Cache at %x is erased to %x\n" , i  ,cache1.cache[i]);
 
             }
-            printf("1st block of Cache erased\n");
+            printf("1st block of Cache erased for additional memory \n");
             break;
         case 2:
             break;
@@ -201,7 +201,8 @@ struct cache direct_mapping()
             printf("invalid choice\n");
 
 
-         }
+        }
+
 
 
 
@@ -303,13 +304,19 @@ struct cache associative()
              for(int i = 0; i < 8; i++)
              {
                 if (cache2.cache[i] != 0)
-                {
-                    printf("Choose replacement techniques\n");
-                    scanf("%d" , &replacement);
-                }
+                      hl = 1;
+                else
+                    hl = 0;
 
              }
 
+            if (hl == 1)
+            {
+                printf("Choose replacement technique\n");
+                printf("1.\n");
+                printf("2.\n");
+                scanf("%d" , &replacement);
+            }
      return cache2;
 }
 
