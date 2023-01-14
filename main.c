@@ -1,6 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 #include<time.h>
+#include<string.h>
 
 
 
@@ -211,9 +212,103 @@ struct cache associative()
     struct cache cache2;
 
     struct memory map = main_memory();
+    //int array[] = {000 , 001 , 010 , 011 , 100 , 101 , 110 , 111};
 
-      int array[]= {00001010 ,00001001 ,00100001 ,00000001};  //first four IAS instructions
 
+       srand(time(NULL));
+          int j = rand() % 26;
+          int k = rand() % 4;      //code for random output of j
+
+
+    printf("current Cache value\n");
+    printf("TAG(hex)            WORDS/INSTRUCTIONS\n");
+              for(int i = 0; i < 4; i++)    //one block of cache is always occupied
+              {
+              cache2.cache[i] = map.memory[i + j];
+               cache2.tag[i] = i;
+                 printf("%d                   0x%x\n" , cache2.tag[i] , cache2.cache[i]);
+
+              }
+              int up =0;
+              int cachevalue = 0;
+              for (int i = k; i < k + 4; i++)
+              {
+                  printf("Enter the %dth Word to insert to a cache\n" , i);
+                  scanf("%d" ,&cachevalue);
+                  cache2.cache[i] = cachevalue;
+                  cache2.tag[i] = i;
+                  printf("Cache value updated to %x in the Cache Address %x\n" , cache2.cache[i] , cache2.tag[i]);
+                up = i + 1;
+              }
+              while(up < 8)
+              {
+                  cache2.cache[up] = 0;
+                  cache2.tag[up] = up;
+                   up++;
+              }
+              for (int i = 0; i < 8; i++)
+              {
+                  printf("In the Address %x Cache Word %x (HEX) is mapped from memory\n" ,cache2.tag[i] , cache2.cache[i] );
+              }
+              //hit or miss process
+                int input;
+      printf("Input the Word to check in the cache\n");
+        scanf("%d" , &input);
+
+        int hit;
+
+               for(int k = 0 ; k < 8;k++)
+        {
+
+             if (cache2.cache[k] == input )
+             {
+               printf("hit at %x with the Word 0x%x\n" , cache2.tag[k] ,cache2.cache[k] );
+               printf("Tag number %x (hex) with the value %x is Delivered to CPU register\n" , cache2.tag[k] , cache2.cache[k]);
+               hit = 1;
+               break;
+
+             }
+             else
+             {
+                  printf("missed the value %x at Cache Address 0x%x\n" , input , cache2.tag[k]);
+                  hit = 0;
+             }
+
+        }
+         if (hit == 0)
+             {
+             printf("searching from Memory..............\n");
+
+            for( int k = 0; k < 32; k++)
+                {
+                if (input == map.memory[k])
+                {
+
+                    printf("found the Word %x in Memory %x\n" , input , map.address[k]);
+                    printf("Delivered the Word %x into the CPU Register\n" , input);
+                    break;
+                }
+
+                else
+                {
+                    printf("word %x not found in Memory Address %x\n" , input , map.address[k]);
+
+                }
+
+                }
+             }
+             // choosing replacement techniques
+             int replacement;
+             int hl;
+             for(int i = 0; i < 8; i++)
+             {
+                if (cache2.cache[i] != 0)
+                {
+                    printf("Choose replacement techniques\n");
+                    scanf("%d" , &replacement);
+                }
+
+             }
 
      return cache2;
 }
