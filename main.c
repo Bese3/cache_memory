@@ -109,7 +109,7 @@ struct cache direct_mapping()
 
 
     printf("current Cache value\n");
-    printf("TAG(hex)            WORDS/INSTRUCTIONS\n");
+    printf("TAG(hex)            WORDS\n");
               for(int i = 0; i < 4; i++)    //one block of cache is always occupied
           {
               cache1.cache[i] = map.memory[i];
@@ -222,7 +222,7 @@ struct cache associative()
 
 
     printf("current Cache value\n");
-    printf("TAG(hex)            WORDS/INSTRUCTIONS\n");
+    printf("TAG(hex)            WORDS\n");
               for(int i = 0; i < 4; i++)    //one block of cache is always occupied
               {
               cache2.cache[i] = map.memory[i + j];
@@ -232,7 +232,7 @@ struct cache associative()
               }
               int up =0;
               int cachevalue = 0;
-              for (int i = k; i < k + 4; i++)
+              for (int i = k; i < k + 5; i++)
               {
                   printf("Enter the %dth Word to insert to a cache\n" , i);
                   scanf("%d" ,&cachevalue);
@@ -315,10 +315,10 @@ struct cache associative()
                 int i = 0;
                 printf("Choose replacement technique\n");
                 printf("1.Least recently used\n");
-                printf("2.FIFO\n");
+                printf("2.Random\n");
                 scanf("%d" , &replacement);
             }
-            if (replacement == 1)
+            if (replacement == 1)   //least recently used technique
             {
                 for (int i = 0; i < k; i++)
                 {
@@ -341,7 +341,14 @@ struct cache associative()
             }
             if (replacement == 2 )
             {
-
+               for(int i = 0;i < 8; i++)
+               {
+                srand(time(NULL));
+                 int random = rand() % 8;
+               printf("Replace the Cache value %x with the new value\n" , cache2.cache[random]);
+               scanf("%x" , cache2.cache[random]);
+                printf("Replaced Successfully\n");
+               }
             }
      return cache2;
 }
