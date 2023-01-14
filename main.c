@@ -312,10 +312,36 @@ struct cache associative()
 
             if (hl == 1)
             {
+                int i = 0;
                 printf("Choose replacement technique\n");
-                printf("1.\n");
-                printf("2.\n");
+                printf("1.Least recently used\n");
+                printf("2.FIFO\n");
                 scanf("%d" , &replacement);
+            }
+            if (replacement == 1)
+            {
+                for (int i = 0; i < k; i++)
+                {
+
+                    printf("Replace the Cache value %x with the new value\n" ,cache2.cache[i] );
+                    scanf("%x" , cache2.cache[i]);
+                    printf("Replaced Successfully\n");
+                }
+                for(int i = k; i < k + 4; i++)
+                {
+                    continue;
+                }
+                for(int i = k + 4; i < 8;i++)
+                {
+
+                    printf("Replace the Cache value %x with the new value\n" , cache2.cache[i]);
+                    scanf("%x" , cache2.cache[i]);
+                    printf("Replaced Successfully\n");
+                }
+            }
+            if (replacement == 2 )
+            {
+
             }
      return cache2;
 }
