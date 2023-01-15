@@ -195,7 +195,7 @@ struct cache direct_mapping()
              printf("Cache at %x is erased to %x\n" , i  ,cache1.cache[i]);
 
             }
-            printf("1st block of Cache erased for additional memory \n");
+            printf("The 1st 4 line of Cache erased for additional memory \n");
             break;
         case 2:
             break;
