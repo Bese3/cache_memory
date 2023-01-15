@@ -29,6 +29,8 @@ int main()
 
 
     int choice;
+    do
+        {
      printf("############################\n");
       printf("#  CACHE MEMORY MAPPING    #\n");
        printf("#                          #\n");
@@ -63,6 +65,7 @@ int main()
 
 
       }
+      }while(choice == 1 || choice == 2 || choice == 3 || choice ==4);
 
     return 0;
 }
@@ -352,5 +355,17 @@ struct cache associative()
             }
      return cache2;
 }
+struct cache set()
+{
+     struct cache cache3;
 
+    struct memory map = main_memory();
+
+
+
+
+
+
+    return cache3;
+}
 
