@@ -17,7 +17,7 @@
 
  struct cache
 {
-    int cache[8];
+    int cache[8][4];
     int tag[8];
 };
 struct memory main_memory();
@@ -81,7 +81,7 @@ int main()
   struct memory copy;
     int array[]= {00001010 ,00001001 ,00100001 ,00000001};  //first four IAS instructions
 
-    printf("ADDRESS             WORDS/INSTRUCTIONS\n");
+    printf("ADDRESS                   WORDS\n");
   for (int i = 0; i < 4; i++)
   {
       copy.memory[i] = array[i];
@@ -99,6 +99,8 @@ int main()
 
     }
 
+    printf("\n \n");
+
          return copy;
          }
 
@@ -113,11 +115,16 @@ struct cache direct_mapping()
 
     printf("current Cache value\n");
     printf("TAG(hex)            WORDS\n");
-              for(int i = 0; i < 4; i++)    //one block of cache is always occupied
+
+      for(int line = 0; line < 4; line++)
+       for(int i = line + 0; i < line + 1; i++)    //one block of cache is always occupied
           {
-              cache1.cache[i] = map.memory[i];
+              cache1.cache[line][i] = map.memory[i];
                cache1.tag[i] = i;
-                 printf("%x                   0x%x\n" , cache1.tag[i] , cache1.cache[i]);
+                 printf("%x                   0x%x   " , cache1.tag[i] , cache1.cache[i]);
+                 for(int j = 0; j < 3; j++)
+                    printf(" 0x%x   ", map.memory[i + 1]);
+                 printf("\n");
            }
         //hit and miss process
      int input;
@@ -125,14 +132,14 @@ struct cache direct_mapping()
         scanf("%d" , &input);
 
         int hit;
-
+       for(int line = 0 ;line < 8; line++)
                for(int k = 0 ; k < 8;k++)
         {
 
-             if (cache1.cache[k] == input )
+             if (cache1.cache[line][k] == input )
              {
-               printf("hit at %x with the Word 0x%x\n" , cache1.tag[k] ,cache1.cache[k] );
-               printf("Tag number %x (hex) with the value %x is Delivered to CPU register\n" , cache1.tag[k] , cache1.cache[k]);
+        printf("hit at %x with the Word 0x%x\n" , cache1.tag[k] ,cache1.cache[line][k] );
+        printf("Tag number %x (hex) with the value %x is Delivered to CPU register\n" , cache1.tag[k] , cache1.cache[line][k]);
                hit = 1;
                break;
 
@@ -166,7 +173,7 @@ struct cache direct_mapping()
 
                 }
              }
-     //adding a word or instruction to the cache from memory
+    //adding a word or instruction to the cache from memory
      int add;
      int data[4];
 
@@ -178,24 +185,24 @@ struct cache direct_mapping()
      switch(add)
          {
         case 1:
-
-            for(int i = 4; i < 8; i++)
+for (int line = 4; line < 8; line++)
+            for(int i = 0; i < 4; i++)
             {
-                  printf("Enter the %dth line\n" , i);
+                  printf("Enter the %dth word int the line %d\n" , i , line);
                 scanf("%d" , &data[i]);
-                cache1.cache[i + random] = data[i];
+                cache1.cache[line][i + random] = data[i];
                 cache1.tag[i] = i;
                 printf("added the Word %x into Cache Address %x\n" , data[i] , cache1.tag[i]);
 
             }
             printf("CACHE IS FULL\n");
-           for(int i = 0; i < 4; i++)
+            for(int line = 0; line < 4; line++)
             {
-          cache1.cache[i] = 0;
-             printf("Cache at %x is erased to %x\n" , i  ,cache1.cache[i]);
+          cache1.cache[line][line] = 0;
+             printf("Cache at Address %x is erased to %x\n" , line  ,cache1.cache[line][line]);
 
             }
-            printf("The 1st 4 line of Cache erased for additional memory \n");
+            printf("The 1st 4 line of Cache is erased for additional memory \n");
             break;
         case 2:
             break;
@@ -226,48 +233,53 @@ struct cache associative()
 
     printf("current Cache value\n");
     printf("TAG(hex)            WORDS\n");
-              for(int i = 0; i < 4; i++)    //one block of cache is always occupied
+    for(int line = 0; line < 4; line++)
+              for(int i = line + 0; i < line + 1; i++)    //one block of cache is always occupied
               {
-              cache2.cache[i] = map.memory[i + j];
+              cache2.cache[line][i] = map.memory[i + j];
                cache2.tag[i] = i;
-                 printf("%d                   0x%x\n" , cache2.tag[i] , cache2.cache[i]);
+                 printf("%d                   0x%x   " , cache2.tag[i] , cache2.cache[line][i]);
+                 for(int hor = 0; hor < 4; hor++)
+                    printf("  0x%x " ,map.memory[i + j + 1] );
+                 printf("\n");
 
               }
+              printf("\n");
               int up =0;
               int cachevalue = 0;
-              for (int i = k; i < k + 5; i++)
+              for (int line = k; line < k + 4; line++)
+                {
+             for (int i = 0; i < 4; i++)
               {
-                  printf("Enter the %dth Word to insert to a cache\n" , i);
+                  printf("Enter the %dth Word to insert to a Cache Address %x\n" , i , cache2.tag[line]);
                   scanf("%d" ,&cachevalue);
-                  cache2.cache[i] = cachevalue;
+                  cache2.cache[line][i] = cachevalue;
                   cache2.tag[i] = i;
-                  printf("Cache value updated to %x in the Cache Address %x\n" , cache2.cache[i] , cache2.tag[i]);
+                  printf("Cache value updated to %x \n" , cache2.cache[line][i]);
                 up = i + 1;
               }
               while(up < 8)
               {
-                  cache2.cache[up] = 0;
+                  cache2.cache[line][up] = 0;
                   cache2.tag[up] = up;
                    up++;
               }
-              for (int i = 0; i < 8; i++)
-              {
-                  printf("In the Address %x Cache Word %x (HEX) is mapped from memory\n" ,cache2.tag[i] , cache2.cache[i] );
               }
+
               //hit or miss process
-                int input;
+              int input;
       printf("Input the Word to check in the cache\n");
         scanf("%d" , &input);
 
         int hit;
-
+       for(int line = 0 ;line < 8; line++)
                for(int k = 0 ; k < 8;k++)
         {
 
-             if (cache2.cache[k] == input )
+             if (cache2.cache[line][k] == input )
              {
-               printf("hit at %x with the Word 0x%x\n" , cache2.tag[k] ,cache2.cache[k] );
-               printf("Tag number %x (hex) with the value %x is Delivered to CPU register\n" , cache2.tag[k] , cache2.cache[k]);
+        printf("hit at %x with the Word 0x%x\n" , cache2.tag[k] ,cache2.cache[line][k] );
+        printf("Tag number %x (hex) with the value %x is Delivered to CPU register\n" , cache2.tag[k] , cache2.cache[line][k]);
                hit = 1;
                break;
 
@@ -288,6 +300,7 @@ struct cache associative()
                 if (input == map.memory[k])
                 {
 
+
                     printf("found the Word %x in Memory %x\n" , input , map.address[k]);
                     printf("Delivered the Word %x into the CPU Register\n" , input);
                     break;
@@ -301,6 +314,7 @@ struct cache associative()
 
                 }
              }
+          /*
              // choosing replacement techniques
              int replacement;
              int hl;
@@ -353,7 +367,8 @@ struct cache associative()
                 printf("Replaced Successfully\n");
                }
             }
-     return cache2;
+
+  */  return cache2;
 }
 struct cache set()
 {
