@@ -133,20 +133,20 @@ struct cache direct_mapping()
 
         int hit;
        for(int line = 0 ;line < 8; line++)
-               for(int k = 0 ; k < 8;k++)
+               for(int k = 0 ; k < 4;k++)
         {
 
              if (cache1.cache[line][k] == input )
              {
-        printf("hit at %x with the Word 0x%x\n" , cache1.tag[k] ,cache1.cache[line][k] );
-        printf("Tag number %x (hex) with the value %x is Delivered to CPU register\n" , cache1.tag[k] , cache1.cache[line][k]);
+        printf("hit at %x with the Word 0x%x(%x)\n" , cache1.tag[line] ,cache1.cache[line][k] , k );
+        printf("Tag number %x (hex) with the value %x is Delivered to CPU register\n" , cache1.tag[line] , cache1.cache[line][k]);
                hit = 1;
                break;
 
              }
              else
              {
-                  printf("missed the value %x at Cache Address 0x%x\n" , input , cache1.tag[k]);
+                  printf("missed the value %x at Cache Address 0x%x(%x)\n" , input , cache1.tag[line] , k);
                   hit = 0;
              }
 
@@ -247,7 +247,7 @@ struct cache associative()
               printf("\n");
               int up =0;
               int cachevalue = 0;
-              for (int line = k; line < k + 4; line++)
+        for (int line = k; line < k + 5; line++)
                 {
              for (int i = 0; i < 4; i++)
               {
@@ -273,27 +273,30 @@ struct cache associative()
 
         int hit;
        for(int line = 0 ;line < 8; line++)
-               for(int k = 0 ; k < 8;k++)
+               for(int k = 0 ; k < 4;k++)
         {
 
              if (cache2.cache[line][k] == input )
              {
-        printf("hit at %x with the Word 0x%x\n" , cache2.tag[k] ,cache2.cache[line][k] );
-        printf("Tag number %x (hex) with the value %x is Delivered to CPU register\n" , cache2.tag[k] , cache2.cache[line][k]);
+
+        printf("hit at %x with the Word 0x%x(%x)\n" , cache2.tag[line] ,cache2.cache[line][k] , k );
+        printf("Tag number %x (hex) with the value %x is Delivered to CPU register\n" , cache2.tag[line] , cache2.cache[line][k]);
+
                hit = 1;
                break;
 
              }
              else
              {
-                  printf("missed the value %x at Cache Address 0x%x\n" , input , cache2.tag[k]);
+
+                  printf("missed the value %x at Cache Address 0x%x(%x)\n" , input , cache2.tag[line] , k);
                   hit = 0;
              }
-
+       printf("\n");
         }
          if (hit == 0)
              {
-             printf("searching from Memory..............\n");
+             printf("Searching from Memory..............\n");
 
             for( int k = 0; k < 32; k++)
                 {
@@ -303,24 +306,26 @@ struct cache associative()
 
                     printf("found the Word %x in Memory %x\n" , input , map.address[k]);
                     printf("Delivered the Word %x into the CPU Register\n" , input);
+                    printf("\n");
                     break;
                 }
 
                 else
                 {
                     printf("word %x not found in Memory Address %x\n" , input , map.address[k]);
+                    printf("\n");
 
                 }
 
                 }
              }
-          /*
+
              // choosing replacement techniques
              int replacement;
              int hl;
              for(int i = 0; i < 8; i++)
              {
-                if (cache2.cache[i] != 0)
+                if (cache2.cache[i][i] != 0)
                       hl = 1;
                 else
                     hl = 0;
@@ -337,38 +342,39 @@ struct cache associative()
             }
             if (replacement == 1)   //least recently used technique
             {
+                for(int line = 0; line < 8; line++)
+                    {
                 for (int i = 0; i < k; i++)
                 {
 
-                    printf("Replace the Cache value %x with the new value\n" ,cache2.cache[i] );
-                    scanf("%x" , cache2.cache[i]);
-                    printf("Replaced Successfully\n");
+            printf("Replace the Cache value %x at Address %x with the new value\n" ,cache2.cache[line][i] , cache2.tag[line]);
+                scanf("%d" , cache2.cache[line][i]);
+                 printf("Replaced Successfully\n");
                 }
-                for(int i = k; i < k + 4; i++)
-                {
-                    continue;
-                }
+
                 for(int i = k + 4; i < 8;i++)
                 {
-
-                    printf("Replace the Cache value %x with the new value\n" , cache2.cache[i]);
-                    scanf("%x" , cache2.cache[i]);
+     printf("Replace the Cache value %x  at Address %x with the new value\n" , cache2.cache[line][i] , cache2.tag[line]);
+            scanf("%d" , cache2.cache[line][i]);
                     printf("Replaced Successfully\n");
                 }
+
+              }
             }
-            if (replacement == 2 )
+           if (replacement == 2 )
             {
-               for(int i = 0;i < 8; i++)
-               {
-                srand(time(NULL));
-                 int random = rand() % 8;
-               printf("Replace the Cache value %x with the new value\n" , cache2.cache[random]);
-               scanf("%x" , cache2.cache[random]);
+                 srand(time(NULL));
+                 int random = rand() % 4;
+               for(int line = random; line < 8; line++)
+                  for(int i = 0; i < 4; i++)
+                   {
+            printf("Replace the Cache value %x at Address %x with the new value\n" , cache2.cache[line][i] , cache2.tag[line]);
+               scanf("%x" , cache2.cache[line][i]);
                 printf("Replaced Successfully\n");
-               }
+                   }
             }
 
-  */  return cache2;
+    return cache2;
 }
 struct cache set()
 {
