@@ -4,7 +4,11 @@
 #include<string.h>
 
 
-
+/*  This project consist of some Cache memory mapping technique used in the Computer.
+ *  In this project we assume that a Line of a Cache has 1 Block at a time and
+ *  1 block of Memory has 4 Words in it , In this case Memory has some constant values
+ *  and also some randomly generated words in compile time.
+ */
  struct memory
 {
 
@@ -23,6 +27,7 @@
 struct memory main_memory();
 struct cache direct_mapping();
 struct cache associative();
+struct cache set();
 
 int main()
 {
@@ -31,6 +36,7 @@ int main()
     int choice;
     do
         {
+    printf("\n");
      printf("############################\n");
       printf("#  CACHE MEMORY MAPPING    #\n");
        printf("#                          #\n");
@@ -40,7 +46,7 @@ int main()
            printf("2. Associative Mapping\n");
             printf("3. Set-Associative Mapping\n");
              printf("4. display main memory\n");
-             scanf("%d" , &choice);
+              scanf("%d" , &choice);
 
 
       switch(choice)
@@ -52,14 +58,14 @@ int main()
         associative();
         break;
       case 3:
-        //set();
+        set();
         break;
       case 4:
         main_memory();
         break;
       case 5:
         default:
-            printf("sorry invalid choice\n");
+            printf("Sorry Invalid Choice\n");
 
 
 
@@ -223,10 +229,8 @@ struct cache associative()
     struct cache cache2;
 
     struct memory map = main_memory();
-    //int array[] = {000 , 001 , 010 , 011 , 100 , 101 , 110 , 111};
 
-
-       srand(time(NULL));
+   srand(time(NULL));
           int j = rand() % 26;
           int k = rand() % 4;      //code for random output of j
 
@@ -381,6 +385,26 @@ struct cache set()
      struct cache cache3;
 
     struct memory map = main_memory();
+     srand(time(NULL));
+          int j = rand() % 26;
+          int k = rand() % 4;      //code for random output of j
+
+
+    printf("current Cache value\n");
+    printf("TAG(hex)            WORDS\n");
+    for(int line = 0; line < 4; line++)
+              for(int i = line + 0; i < line + 1; i++)    //one block of cache is always occupied
+              {
+              cache3.cache[line][i] = map.memory[i + j];
+               cache3.tag[i] = i;
+                 printf("%d                   0x%x   " , cache3.tag[i] , cache3.cache[line][i]);
+                 for(int hor = 0; hor < 4; hor++)
+                    printf("  0x%x " ,map.memory[i + j + 1] );
+                 printf("\n");
+
+              }
+              printf("\n");
+
 
 
 
