@@ -347,15 +347,15 @@ struct cache associative()
                 for (int i = 0; i < k; i++)
                 {
 
-            printf("Replace the Cache value %x at Address %x with the new value\n" ,cache2.cache[line][i] , cache2.tag[line]);
-                scanf("%d" , cache2.cache[line][i]);
+            printf("Replace the Cache value %x at Address %x (%x)with the new value\n" ,cache2.cache[line][i] , cache2.tag[line] , i);
+                scanf("%d" , &cache2.cache[line][i]);
                  printf("Replaced Successfully\n");
                 }
 
                 for(int i = k + 4; i < 8;i++)
                 {
-     printf("Replace the Cache value %x  at Address %x with the new value\n" , cache2.cache[line][i] , cache2.tag[line]);
-            scanf("%d" , cache2.cache[line][i]);
+     printf("Replace the Cache value %x  at Address %x (%x) with the new value\n" , cache2.cache[line][i] , cache2.tag[line] , i);
+            scanf("%d" , &cache2.cache[line][i]);
                     printf("Replaced Successfully\n");
                 }
 
@@ -368,8 +368,8 @@ struct cache associative()
                for(int line = random; line < 8; line++)
                   for(int i = 0; i < 4; i++)
                    {
-            printf("Replace the Cache value %x at Address %x with the new value\n" , cache2.cache[line][i] , cache2.tag[line]);
-               scanf("%x" , cache2.cache[line][i]);
+            printf("Replace the Cache value %x at Address %x (%x)with the new value\n" , cache2.cache[line][i] , cache2.tag[line], i);
+               scanf("%x" , &cache2.cache[line][i]);
                 printf("Replaced Successfully\n");
                    }
             }
