@@ -415,11 +415,10 @@ struct cache set()
     struct memory map = main_memory();
      srand(time(NULL));
      int j = rand() % 26;
-          int k = rand() % 7;      //code for random output
-          int l = rand() % 7;
-          printf("Cache current value at Set %x\n" , k);
+          int l = rand() % 7;      //code for random output
+          printf("Cache current value at Set %x\n" , 0);
            printf("TAG(hex)            WORDS\n");
-          for (int set = k; set < k + 2; set++ )
+          for (int set = 0; set < 2; set++ )
 
               for(int i = set + 0; i < set + 1; i++)    //1 set of line in a Cache is always occupied
               {
@@ -443,14 +442,20 @@ struct cache set()
               case 0:
                 break;
               case 1:
-             for(int line = l; line < l + 2; line++)
+             for(int line = l; line < 2 + l; line++)
+                {
              for(int i = 0; i < 4; i++)
                  {
-                printf("Enter the word to add at Cache line %x (%x)\n" , line ,i);
-                scanf("%d" , &cache3.cache[line][i]);
-               printf("Cache value updated to %x\n" ,cache3.cache[line][i]);
 
-                 }
+
+                     printf("Enter the word to add at Cache line %x (%x)\n" , line ,i);
+                scanf("%d" , &cache3.cache[line][i]);
+
+                 printf("Cache value updated to %x\n" ,cache3.cache[line][i]);
+                  }
+
+                }
+                printf("Set %x updated\n" , l);
 
               case 3:
               default:
@@ -529,7 +534,7 @@ struct cache set()
             {
             if (hl == 1)
             {
-                int i = 0;
+                //int i = 0;
                 printf("Choose replacement technique\n");
                 printf("1.Least recently used\n");
                 printf("2.Random\n");
@@ -537,13 +542,18 @@ struct cache set()
             }
             if (replacement == 1)   //least recently used technique
             {
-                for(int line = k; line < k + 2; line++)
+                for(int line = 0; line < 8; line++)
                     for (int i = 0; i < 4; i++)
                 {
+                    do
+                        {
 
             printf("Replace the Cache value %x at Address(set) %x (%x)with the new value\n" ,cache3.cache[line][i] , cache3.tag[line] , i);
                 scanf("%d" , &cache3.cache[line][i]);
+                printf("Set value at %x updated\n" , line);
                  printf("Replaced Successfully\n");
+
+                        }while(line == 2*l);
                 }
 
 
