@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<time.h>
 #include<string.h>
+#include"shell.h"
 
 
 /*  This project consist of some Cache memory mapping technique used in the Computer.
@@ -10,25 +11,6 @@
  *  and also some randomly generated words in compile time.
  *  for Set Associative mapping a Set is equals to 2 Cache Lines.
  */
- struct memory
-{
-
-    int memory[32];
-    int *address[32];
-
-};
-
-
-
- struct cache
-{
-    int cache[8][4];
-    int tag[8];
-};
-struct memory main_memory();
-struct cache direct_mapping();
-struct cache associative();
-struct cache set();
 
 int main()
 {
@@ -86,7 +68,7 @@ int main()
 // sample memory unit which has some IAS instructions and generated words in hexadecimal form
 
   struct memory copy;
-    int array[]= {00001010 ,00001001 ,00100001 ,00000001};  //first four IAS instructions
+    int array[]= {0b00001010 ,0b00001001 ,0b00100001 ,0b00000001};  //first four IAS instructions
 
     printf("ADDRESS                   WORDS\n");
   for (int i = 0; i < 4; i++)
@@ -450,6 +432,7 @@ struct cache set()
 
                      printf("Enter the word to add at Cache line %x (%x)\n" , line ,i);
                 scanf("%d" , &cache3.cache[line][i]);
+                cache3.tag[line] = line;
 
                  printf("Cache value updated to %x\n" ,cache3.cache[line][i]);
                   }
