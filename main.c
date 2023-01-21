@@ -250,6 +250,16 @@ struct cache associative()
               printf("\n");
               int up =0;
               int cachevalue = 0;
+              int add;
+    do
+      {
+          printf("Enter 1 to begin adding words to Cache\n");
+          scanf("%d" , &add);
+          if (add != 1)
+            {
+            printf("Exited going to Search function...........\n");
+            break;
+            }
         for (int line = k; line < k + 5; line++)
                 {
              for (int i = 0; i < 4; i++)
@@ -268,6 +278,7 @@ struct cache associative()
                    up++;
               }
               }
+      }while(add == 1);
 
               //hit or miss process
               int input;
