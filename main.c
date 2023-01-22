@@ -1,7 +1,3 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<time.h>
-#include<string.h>
 #include"shell.h"
 
 
@@ -10,6 +6,7 @@
  *  1 block of Memory has 4 Words in it , In this case Memory has some constant values
  *  and also some randomly generated words in compile time.
  *  for Set Associative mapping a Set is equals to 2 Cache Lines.
+ *  All the words listed are in Hexadecimal form for readability purpose.
  */
 
 int main()
@@ -75,15 +72,16 @@ int main()
   {
       copy.memory[i] = array[i];
         copy.address[i] = &copy.memory[i];
-           printf("%p         0x%x   %d\n" , copy.address[i] , copy.memory[i] , copy.memory[i]);
+           printf("0x%p         0x%x   %d(Decimal)\n" , copy.address[i] , copy.memory[i] , copy.memory[i]);
   }
+   srand(time(NULL));
 
     for (int j = 4; j < 32; j++)
    {
-     srand(time(NULL));
+
        copy.memory[j] = rand() / j;
         copy.address[j] = &copy.memory[j];
-   printf("%p         0x%x   %d\n" ,copy.address[j] , copy.memory[j] , copy.memory[j]);
+   printf("0x%p         0x%x   %d(Decimal)\n" ,copy.address[j] , copy.memory[j] , copy.memory[j]);
 
 
     }
@@ -108,7 +106,7 @@ struct cache direct_mapping()
           int j = rand() % 26;      //code for random output of j
 
 
-    printf("current Cache value\n");
+    printf("Current Cache Value\n");
     printf("TAG(hex)            WORDS\n");
 
       for(int line = 0; line < 4; line++)
@@ -154,10 +152,12 @@ struct cache direct_mapping()
             printf("The 1st 4 line of Cache is erased for additional memory \n");
             break;
         case 2:
+            printf("Exited Adding function Search Function Loading...........\n");
+            sleep(3);
             break;
         case 3:
         default:
-            printf("invalid choice\n");
+            printf("Invalid Choice\n");
 
 
         }
@@ -169,6 +169,7 @@ struct cache direct_mapping()
 
         int hit;
        for(int line = 0 ;line < 8; line++)
+        {
                for(int k = 0 ; k < 4;k++)
         {
 
@@ -187,9 +188,14 @@ struct cache direct_mapping()
              }
 
         }
+        if (hit == 1)
+                break;
+
+                }
          if (hit == 0)
              {
-             printf("searching from Memory..............\n");
+             printf("Searching from Memory..............\n");
+             sleep(2);
 
             for( int k = 0; k < 32; k++)
                 {
@@ -258,6 +264,7 @@ struct cache associative()
           if (add != 1)
             {
             printf("Exited going to Search function...........\n");
+            sleep(2);
             break;
             }
         for (int line = k; line < k + 5; line++)
@@ -287,13 +294,14 @@ struct cache associative()
 
         int hit;
        for(int line = 0 ;line < 8; line++)
+        {
                for(int k = 0 ; k < 4;k++)
         {
 
              if (cache2.cache[line][k] == input )
              {
 
-        printf("hit at %x with the Word 0x%x(%x)\n" , cache2.tag[line] ,cache2.cache[line][k] , k );
+        printf("hit at %x (%x) with the Word 0x%x\n" , cache2.tag[line] ,k , cache2.cache[line][k]);
         printf("Tag number %x (hex) with the value %x is Delivered to CPU register\n" , cache2.tag[line] , cache2.cache[line][k]);
 
                hit = 1;
@@ -308,6 +316,10 @@ struct cache associative()
              }
        printf("\n");
         }
+        if (hit == 1)
+                break;
+
+         }
          if (hit == 0)
              {
              printf("Searching from Memory..............\n");
@@ -347,7 +359,7 @@ struct cache associative()
              }
 
         do
-            {
+        {
             if (hl == 1)
             {
                 int i = 0;
@@ -358,41 +370,68 @@ struct cache associative()
             }
             if (replacement == 1)   //least recently used technique
             {
-                for(int line = 0; line < 8; line++)
-                    {
-                for (int i = 0; i < k; i++)
-                {
+                 printf("Enter the Address from Main Memory to Replace\n");
+                 scanf("%d" , &replacement);
+                for(int line = 0; line < k; line++)
+              for(int i = line + 0; i < line + 1; i++)
+              {
+              cache2.cache[line][i] = map.memory[replacement];
 
-            printf("Replace the Cache value %x at Address %x (%x)with the new value\n" ,cache2.cache[line][i] , cache2.tag[line] , i);
-                scanf("%d" , &cache2.cache[line][i]);
-                 printf("Replaced Successfully\n");
-                }
-
-                for(int i = k + 4; i < 8;i++)
-                {
-     printf("Replace the Cache value %x  at Address %x (%x) with the new value\n" , cache2.cache[line][i] , cache2.tag[line] , i);
-            scanf("%d" , &cache2.cache[line][i]);
-                    printf("Replaced Successfully\n");
-                }
+              replacement++;
+               cache2.tag[i] = i;
+                 printf("%d                   0x%x   " , cache2.tag[i] , cache2.cache[line][i]);
+                 for(int hor = 0; hor < 3; hor++)
+                    printf("  0x%x " ,map.memory[i +hor] );
+                 printf("\n");
 
               }
-            }
+
+
+    for(int line = k + 4; line < 8; line++)
+              for(int i = line + 0; i < line + 1; i++)    //4 line of cache is always occupied
+              {
+              cache2.cache[line][i] = map.memory[replacement];
+              replacement++;
+               cache2.tag[i] = i;
+                 printf("%d                   0x%x   " , cache2.tag[i] , cache2.cache[line][i]);
+                 for(int hor = 0; hor < 3; hor++)
+                    printf("  0x%x " ,map.memory[i + hor] );
+                 printf("\n");
+
+              }
+              printf("\n");
+              printf("Replaced the Cache value from %x in Main Memory\n" , replacement - 4);
+
+              }
+
            if (replacement == 2 )   //randomly replacing Cache for Memory to map again
             {
                  srand(time(NULL));
                  int random = rand() % 4;
-               for(int line = random; line < 8; line++)
-                  for(int i = 0; i < 4; i++)
-                   {
-            printf("Replace the Cache value %x at Address %x (%x)with the new value\n" , cache2.cache[line][i] , cache2.tag[line], i);
-               scanf("%x" , &cache2.cache[line][i]);
-                printf("Replaced Successfully\n");
-                   }
+                 printf("Enter the Address from Main Memory to Replace\n");
+                 scanf("%d" , &replacement);
+               for(int line = random; line < random + 4; line++)
+              for(int i = line + 0; i < line + 1; i++)
+              {
+              cache2.cache[line][i] = map.memory[replacement];
+              replacement++;
+               cache2.tag[i] = i;
+                 printf("%d                   0x%x   " , cache2.tag[i] , cache2.cache[line][i]);
+                 for(int hor = 0; hor < 3; hor++)
+                    printf("  0x%x " ,map.memory[i + hor] );
+                 printf("\n");
+
+              }
+              printf("\n");
+              printf("Replaced the Cache value from %x in Main Memory\n" , replacement - 4);
             }
        }while(replacement == 1 || replacement == 2);
 
     return cache2;
 }
+
+
+
 
 
 
@@ -466,6 +505,7 @@ struct cache set()
 
         int hit;
        for(int line = 0 ;line < 8; line++)
+        {
                for(int k = 0 ; k < 4;k++)
         {
 
@@ -485,7 +525,11 @@ struct cache set()
                   printf("missed the value %x at Cache Address 0x%x(%x)\n" , input , cache3.tag[line] , k);
                   hit = 0;
              }
+
+          }
        printf("\n");
+       if (hit == 1)
+              break;
         }
          if (hit == 0)
              {
@@ -536,34 +580,47 @@ struct cache set()
             }
             if (replacement == 1)   //least recently used technique
             {
-                for(int line = 0; line < 8; line++)
-                    for (int i = 0; i < 4; i++)
-                {
-                    do
-                        {
+                printf("Enter the Address from Main Memory to Replace\n");
+                 scanf("%d" , &replacement);
 
-            printf("Replace the Cache value %x at Address(set) %x (%x)with the new value\n" ,cache3.cache[line][i] , cache3.tag[line] , i);
-                scanf("%d" , &cache3.cache[line][i]);
-                printf("Set value at %x updated\n" , line);
-                 printf("Replaced Successfully\n");
+ for (int set = l + 2; set < l + 4; set++ )
 
-                        }while(line == 2*l);
-                }
+        for(int i = set + 0; i < set + 1; i++)
+              {
+              cache3.cache[set][i] = map.memory[replacement];
+              replacement++;
+               cache3.tag[i] = i;
+                 printf("%d                   0x%x   " , cache3.tag[i] , cache3.cache[set][i]);
+                 for(int hor = 0; hor < 3; hor++)
+                    printf("  0x%x " ,map.memory[ i + hor] );
+                 printf("\n");
 
-
+              }
+              printf("\n");
+              printf("Cache Value Replaced from Main Memory starting from %x" , replacement - 2);
 
             }
           if (replacement == 2 )   //randomly replacing Cache for Memory to map again
             {
                  srand(time(NULL));
                  int random = rand() % 4;
-               for(int line = random; line < random + 2; line++)
-                  for(int i = 0; i < 4; i++)
-                   {
-            printf("Replace the Cache value %x at Address %x (%x)with the new value\n" , cache3.cache[line][i] , cache3.tag[line], i);
-               scanf("%x" , &cache3.cache[line][i]);
-                printf("Replaced Successfully\n");
-                   }
+               for (int set = l; set < l + 2; set++ )
+
+        for(int i = set + 0; i < set + 1; i++)
+              {
+              cache3.cache[set][i] = map.memory[replacement];
+              replacement++;
+               cache3.tag[i] = i;
+                 printf("%d                   0x%x   " , cache3.tag[i] , cache3.cache[set][i]);
+                 for(int hor = 0; hor < 3; hor++)
+                    printf("  0x%x " ,map.memory[ i + hor] );
+                 printf("\n");
+
+              }
+              printf("\n");
+              printf("Cache Value Replaced from Main Memory starting from %x" , replacement - 2);
+
+
             }
         }while(replacement == 1 || replacement == 2);
 
