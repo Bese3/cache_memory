@@ -347,7 +347,7 @@ struct cache associative()
              }
 
              // choosing replacement techniques
-             int replacement;
+             int replacement = 0;
              int hl;
              for(int i = 0; i < 8; i++)
              {
